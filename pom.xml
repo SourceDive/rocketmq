@@ -173,6 +173,7 @@
         <module>logging</module>
         <module>acl</module>
         <module>example</module>
+        <module>my-debug-module</module>
     </modules>
 
     <build>
@@ -541,6 +542,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>rocketmq-example</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>my-debug-module</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
