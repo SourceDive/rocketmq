@@ -8,18 +8,23 @@
 my-debug-module/
 ├── src/
 │   ├── main/java/org/apache/rocketmq/debug/
-│   │   ├── SimpleProducerExample.java    # 简单生产者示例
-│   │   └── SimpleConsumerExample.java    # 简单消费者示例
+│   │   ├── SimpleProducerExample.java        # 简单生产者示例
+│   │   ├── SimpleConsumerExample.java        # 简单消费者示例
+│   │   ├── ContinuousProducerExample.java    # 持续运行的生产者示例
+│   │   └── ContinuousConsumerExample.java    # 持续运行的消费者示例
 │   └── test/java/org/apache/rocketmq/debug/
-│       └── DebugModuleTest.java          # 模块测试类
-├── pom.xml                               # Maven配置文件
-└── README.md                             # 说明文档
+│       └── DebugModuleTest.java              # 模块测试类
+├── pom.xml                                   # Maven配置文件
+├── run-examples.sh                           # 运行脚本
+└── README.md                                 # 说明文档
 ```
 
 ## 功能特性
 
 - **直接依赖RocketMQ源码模块**：可以直接引用和调试RocketMQ的所有内部组件
 - **完整的示例代码**：包含生产者和消费者的基本使用示例
+- **持续运行支持**：提供持续运行的生产者和消费者示例
+- **交互式操作**：支持交互式发送消息和自动发送模式
 - **测试环境**：提供单元测试来验证模块设置和依赖关系
 - **调试友好**：可以设置断点，单步调试RocketMQ源码
 
@@ -41,11 +46,27 @@ mvn test -pl my-debug-module
 
 ### 3. 运行示例
 
+#### 方式一：使用运行脚本（推荐）
 ```bash
-# 运行生产者示例
+# 进入调试模块目录
+cd my-debug-module
+
+# 运行脚本，选择要运行的程序
+./run-examples.sh
+```
+
+#### 方式二：直接运行Maven命令
+```bash
+# 持续运行的生产者（交互式）
+mvn exec:java -pl my-debug-module -Dexec.mainClass="org.apache.rocketmq.debug.ContinuousProducerExample"
+
+# 持续运行的消费者
+mvn exec:java -pl my-debug-module -Dexec.mainClass="org.apache.rocketmq.debug.ContinuousConsumerExample"
+
+# 简单生产者示例
 mvn exec:java -pl my-debug-module -Dexec.mainClass="org.apache.rocketmq.debug.SimpleProducerExample"
 
-# 运行消费者示例
+# 简单消费者示例
 mvn exec:java -pl my-debug-module -Dexec.mainClass="org.apache.rocketmq.debug.SimpleConsumerExample"
 ```
 
