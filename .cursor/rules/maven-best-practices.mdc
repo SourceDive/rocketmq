@@ -1,0 +1,71 @@
+---
+description: Maven 项目配置和资源管理最佳实践
+tags: [maven, java, build-tools]
+type: auto-attached
+patterns: ["pom.xml", "*.java", "mvnw"]
+---
+
+# Maven 项目最佳实践
+
+## 资源文件处理
+
+1. 资源文件应放在 `src/main/resources` 目录
+2. 测试资源放在 `src/test/resources` 目录
+3. 确保 `pom.xml` 中配置了资源插件，自动复制资源到 `target/classes`
+4. 不要手动复制文件到 `target` 目录
+
+## 构建配置示例
+
+```xml
+<build>
+  <resources>
+    <resource>
+      <directory>src/main/resources</directory>
+      <includes>
+        <include>**/*.xml</include>
+        <include>**/*.yml</include>
+        <include>**/*.properties</include>
+        <include>**/*.sql</include>
+      </includes>
+    </resource>
+  </resources>
+  
+  <plugins>
+    <!-- Maven 资源插件 -->
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-resources-plugin</artifactId>
+      <version>3.2.0</version>
+      <configuration>
+        <encoding>UTF-8</encoding>
+      </configuration>
+    </plugin>
+    
+    <!-- Maven 编译插件 -->
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.8.1</version>
+      <configuration>
+        <source>8</source>
+        <target>8</target>
+        <encoding>UTF-8</encoding>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+```
+
+## 依赖管理
+
+1. 优先使用 Maven 中央仓库的标准版本
+2. 避免使用自定义的 SNAPSHOT 版本（除非确实需要）
+3. 如果项目依赖本地模块，确保先构建依赖模块
+4. 使用 `<dependencyManagement>` 统一管理版本号
+5. 定期更新依赖版本，但要测试兼容性
+
+## Maven Wrapper
+
+- 推荐添加 Maven Wrapper 到项目中
+- 使用 `./mvnw` 而不是 `mvn` 命令
+- 确保 `mvnw` 文件有执行权限（`chmod +x mvnw`）

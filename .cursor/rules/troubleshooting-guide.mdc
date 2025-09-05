@@ -1,0 +1,54 @@
+---
+description: 常见问题解决流程和调试技巧
+tags: [debugging, troubleshooting, java]
+type: agent-requested
+---
+
+# 问题解决流程
+
+## 遇到 "Could not find resource" 错误时
+
+1. 检查资源文件是否在 `src/main/resources` 目录
+2. 检查 `target/classes` 目录是否包含资源文件
+3. 如果没有，检查 Maven 资源插件配置
+4. 使用 `mvn clean compile` 或 `./mvnw clean compile` 重新构建
+5. 确保资源文件路径正确（相对于 classpath 根目录）
+
+## 编译错误处理
+
+1. 检查 Java 版本兼容性
+2. 确保所有依赖都已正确声明在 `pom.xml` 中
+3. 运行 `mvn dependency:tree` 检查依赖冲突
+4. 如果某些类编译失败，可以：
+   - 使用 `<excludes>` 排除有问题的类
+   - 选择性编译需要的文件
+5. 清理并重新构建：`mvn clean compile`
+
+## 运行时错误处理
+
+1. 确保 classpath 包含所有必要的依赖
+2. 使用完整的 classpath 运行：
+   ```bash
+   java -cp "target/classes:依赖1.jar:依赖2.jar" 主类名
+   ```
+3. 检查配置文件是否在 classpath 中
+4. 查看完整的异常堆栈跟踪
+5. 使用日志调试，设置合适的日志级别
+
+## 依赖问题处理
+
+1. 无法下载依赖时：
+   - 检查网络连接
+   - 检查 Maven 仓库配置
+   - 尝试使用镜像仓库
+2. 版本冲突时：
+   - 使用 `mvn dependency:tree` 分析
+   - 使用 `<exclusions>` 排除冲突的传递依赖
+   - 在 `<dependencyManagement>` 中统一版本
+
+## 测试失败处理
+
+1. 查看测试报告：`target/surefire-reports/`
+2. 单独运行失败的测试类
+3. 检查测试环境配置（数据库、文件路径等）
+4. 使用 `-DskipTests` 临时跳过测试（仅用于调试）

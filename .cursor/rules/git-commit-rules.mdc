@@ -1,0 +1,36 @@
+---
+description: Git 提交和文件管理最佳实践
+tags: [git, best-practices, file-management]
+type: always
+---
+
+# Git 提交规范
+
+## 永远不要提交的文件
+
+- `target/` 目录及其所有内容（Maven/Gradle 构建输出）
+- `*.class` 文件（Java 编译输出）
+- `.idea/` 目录（IntelliJ IDEA 配置）
+- `*.iml` 文件（IntelliJ IDEA 模块文件）
+- `.DS_Store`（macOS 系统文件）
+- `Thumbs.db`（Windows 系统文件）
+- 临时下载的文件（如 `apache-maven-*.tar.gz`）
+- 临时解压的目录（如 `apache-maven-*/`）
+- `*.log` 日志文件
+- `*.tmp`、`*.temp` 临时文件
+
+## 可以提交的文件
+
+- 源代码文件（`*.java`, `*.xml`, `*.properties`, `*.yml`）
+- 项目配置文件（`pom.xml`, `build.gradle`）
+- Maven Wrapper 文件（`.mvn/`, `mvnw`, `mvnw.cmd`）- 这些帮助其他开发者构建项目
+- 文档文件（`README.md`, `*.md`）
+- `.gitignore` 文件
+- GitHub Actions 工作流文件（`.github/workflows/*.yml`）
+
+## Git 操作最佳实践
+
+- 提交前使用 `git status` 检查将要提交的文件
+- 使用 `git ls-files | grep pattern` 检查已跟踪的文件
+- 发现错误提交的文件时，使用 `git rm` 移除
+- 确保 `.gitignore` 文件包含所有需要忽略的模式

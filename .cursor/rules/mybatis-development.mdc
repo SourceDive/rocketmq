@@ -1,0 +1,74 @@
+---
+description: MyBatis 开发最佳实践和配置指南
+tags: [mybatis, database, orm]
+type: auto-attached
+patterns: ["**/mapper/*.xml", "**/dao/*.java", "mybatis-config.xml"]
+---
+
+# MyBatis 开发指南
+
+## 配置文件管理
+
+1. `mybatis-config.xml` 应放在 `src/main/resources` 目录
+2. Mapper XML 文件建议放在 `src/main/resources/mapper/` 目录
+3. 确保 XML 文件的 namespace 与对应的接口完全匹配
+
+## MyBatis 配置示例
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 开启驼峰命名转换 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 开启延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <!-- 开启二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 打印 SQL 日志 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${db.driver}"/>
+                <property name="url" value="${db.url}"/>
+                <property name="username" value="${db.username}"/>
+                <property name="password" value="${db.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    
+    <mappers>
+        <!-- 使用包扫描 -->
+        <package name="com.zero.app.dao"/>
+    </mappers>
+</configuration>
+```
+
+## Mapper 接口最佳实践
+
+1. 使用 `@Mapper` 注解标记接口（Spring Boot 项目）
+2. 方法名要有意义，遵循命名规范
+3. 使用 `@Param` 注解标记多个参数
+4. 返回集合时使用 `List` 而不是 `ArrayList`
+
+## 动态 SQL 最佳实践
+
+1. 使用 `<where>` 标签自动处理 WHERE 子句
+2. 使用 `<set>` 标签处理 UPDATE 语句
+3. 使用 `<trim>` 处理前后缀
+4. 避免在 XML 中写复杂的业务逻辑
+
+## 性能优化
+
+1. 合理使用缓存（一级缓存和二级缓存）
+2. 避免 N+1 查询问题
+3. 使用批量操作提高性能
+4. 大数据量查询使用分页
+5. 复杂查询考虑使用存储过程
