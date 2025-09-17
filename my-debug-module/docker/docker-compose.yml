@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  namesrv:
+    image: apache/rocketmq:4.9.5
+    container_name: mqnamesrv
+    ports:
+      - 9876:9876
+    networks:
+      - rocketmq
+    command: sh mqnamesrv
+
+  broker:
+    image: apache/rocketmq:4.9.5
+    container_name: mqbroker
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    environment:
+      - NAMESRV_ADDR=rmqnamesrv:9876
+    volumes:
+      - ./broker.conf:/Users/zero/Documents/03_study/02_tech/github/back_end/java/01_my_projects/framework/rocketmq/my-debug-module/docker/broker.conf
+    depends_on:
+      - namesrv
+    networks:
+      - rocketmq
+    command: sh mqbroker -c /Users/zero/Documents/03_study/02_tech/github/back_end/java/01_my_projects/framework/rocketmq/my-debug-module/docker/broker.conf
+
+networks:
+  rocketmq:
+    driver: bridge
