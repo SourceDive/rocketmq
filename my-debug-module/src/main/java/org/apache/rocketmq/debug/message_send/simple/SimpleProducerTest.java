@@ -1,4 +1,4 @@
-package org.apache.rocketmq.debug.message_send;
+package org.apache.rocketmq.debug.message_send.simple;
 
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
