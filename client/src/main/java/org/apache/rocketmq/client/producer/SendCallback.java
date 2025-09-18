@@ -16,8 +16,11 @@
  */
 package org.apache.rocketmq.client.producer;
 
+// 发送异步消息使用
 public interface SendCallback {
+    // 发送成功之后的动作。
     void onSuccess(final SendResult sendResult);
 
+    // 发送失败之后的动作。
     void onException(final Throwable e);
 }

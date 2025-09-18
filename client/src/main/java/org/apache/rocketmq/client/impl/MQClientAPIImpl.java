@@ -569,6 +569,7 @@ public class MQClientAPIImpl {
                             }
 
                             try {
+                                // 触发回调接口的成功逻辑。
                                 sendCallback.onSuccess(sendResult);
                             } catch (Throwable e) {
                             }

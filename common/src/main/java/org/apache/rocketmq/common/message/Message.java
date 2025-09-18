@@ -25,11 +25,11 @@ import java.util.Map;
 public class Message implements Serializable {
     private static final long serialVersionUID = 8445773977080406428L;
 
-    private String topic;
+    private String topic; // [必填]要发送的消息的主题。
     private int flag;
-    private Map<String, String> properties;
-    private byte[] body;
-    private String transactionId;
+    private Map<String, String> properties; // 消息属性
+    private byte[] body; // [必填]消息的存储内容
+    private String transactionId; // 在事务消息中使用。
 
     public Message() {
     }

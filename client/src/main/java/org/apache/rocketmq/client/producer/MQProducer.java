@@ -26,6 +26,7 @@ import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 
+// 消息的发送者。
 public interface MQProducer extends MQAdmin {
     void start() throws MQClientException;
 
@@ -40,12 +41,14 @@ public interface MQProducer extends MQAdmin {
     SendResult send(final Message msg, final long timeout) throws MQClientException,
         RemotingException, MQBrokerException, InterruptedException;
 
+    // 发送异步消息。
     void send(final Message msg, final SendCallback sendCallback) throws MQClientException,
         RemotingException, InterruptedException;
 
     void send(final Message msg, final SendCallback sendCallback, final long timeout)
         throws MQClientException, RemotingException, InterruptedException;
 
+    // 发送单向消息。无响应。
     void sendOneway(final Message msg) throws MQClientException, RemotingException,
         InterruptedException;
 
@@ -85,6 +88,7 @@ public interface MQProducer extends MQAdmin {
     TransactionSendResult sendMessageInTransaction(final Message msg,
         final LocalTransactionExecuter tranExecuter, final Object arg) throws MQClientException;
 
+    // 发送事务消息。
     TransactionSendResult sendMessageInTransaction(final Message msg,
         final Object arg) throws MQClientException;
 

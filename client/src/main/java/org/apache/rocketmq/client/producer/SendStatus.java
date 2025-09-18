@@ -17,8 +17,12 @@
 package org.apache.rocketmq.client.producer;
 
 public enum SendStatus {
+    // 消息发送成功。这意味着 broket 一切正常。
     SEND_OK,
+    // 消息发送成功，刷盘超时。
     FLUSH_DISK_TIMEOUT,
+    // 消息发送成功，同步 slave 超时。
     FLUSH_SLAVE_TIMEOUT,
+    // 消息发送成功，slave 不可用。
     SLAVE_NOT_AVAILABLE,
 }
