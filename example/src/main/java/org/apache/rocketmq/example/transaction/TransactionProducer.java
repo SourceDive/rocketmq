@@ -31,9 +31,9 @@ import java.util.concurrent.TimeUnit;
 
 public class TransactionProducer {
 
-    public static final String PRODUCER_GROUP = "please_rename_unique_group_name";
+    public static final String PRODUCER_GROUP = "tx_producer_group";
     public static final String DEFAULT_NAMESRVADDR = "127.0.0.1:9876";
-    public static final String TOPIC = "TopicTest1234";
+    public static final String TOPIC = "TopicTx";
 
     public static final int MESSAGE_COUNT = 10;
 
@@ -42,7 +42,7 @@ public class TransactionProducer {
         TransactionMQProducer producer = new TransactionMQProducer(PRODUCER_GROUP);
 
         // Uncomment the following line while debugging, namesrvAddr should be set to your local address
-//        producer.setNamesrvAddr(DEFAULT_NAMESRVADDR);
+        producer.setNamesrvAddr(DEFAULT_NAMESRVADDR);
         ExecutorService executorService = new ThreadPoolExecutor(2, 5, 100, TimeUnit.SECONDS, new ArrayBlockingQueue<>(2000), r -> {
             Thread thread = new Thread(r);
             thread.setName("client-transaction-msg-check-thread");

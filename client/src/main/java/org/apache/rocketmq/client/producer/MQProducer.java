@@ -33,6 +33,7 @@ public interface MQProducer extends MQAdmin {
 
     List<MessageQueue> fetchPublishMessageQueues(final String topic) throws MQClientException;
 
+    // 单笔发送
     SendResult send(final Message msg) throws MQClientException, RemotingException, MQBrokerException,
         InterruptedException;
 
@@ -87,6 +88,7 @@ public interface MQProducer extends MQAdmin {
     TransactionSendResult sendMessageInTransaction(final Message msg,
         final Object arg) throws MQClientException;
 
+    // 批量发送。一批消息得是同一个主题。
     //for batch
     SendResult send(final Collection<Message> msgs) throws MQClientException, RemotingException, MQBrokerException,
         InterruptedException;
