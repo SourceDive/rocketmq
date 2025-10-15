@@ -25,26 +25,35 @@ import org.apache.rocketmq.remoting.annotation.CFNotNull;
 import org.apache.rocketmq.remoting.annotation.CFNullable;
 import org.apache.rocketmq.remoting.exception.RemotingCommandException;
 
+/**
+ * 请求头数据结构。
+ */
 public class SendMessageRequestHeader extends RpcRequestHeader {
     @CFNotNull
+    // 生产者组名
     private String producerGroup;
     @CFNotNull
+    // 目标topic
     private String topic;
     @CFNotNull
+    // 默认topic
     private String defaultTopic;
     @CFNotNull
+    // 默认topic队列数量
     private Integer defaultTopicQueueNums;
     @CFNotNull
     private Integer queueId;
     @CFNotNull
     private Integer sysFlag;
     @CFNotNull
+    // 消息出生时间戳
     private Long bornTimestamp;
     @CFNotNull
     private Integer flag;
     @CFNullable
     private String properties;
     @CFNullable
+    // 重试次数
     private Integer reconsumeTimes;
     @CFNullable
     private boolean unitMode = false;

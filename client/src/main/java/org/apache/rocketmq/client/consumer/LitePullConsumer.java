@@ -102,6 +102,8 @@ public interface LitePullConsumer {
     void setSubExpressionForAssign(final String topic, final String subExpression);
 
     /**
+     * <p>拉取消息。</p>
+     * <p>有消息返回消息，没有消息返回null。</p>
      * Fetch data for the topics or partitions specified using assign API
      *
      * @return list of message, can be null.
@@ -109,6 +111,8 @@ public interface LitePullConsumer {
     List<MessageExt> poll();
 
     /**
+     * <p>拉取消息。带超时设置。</p>
+     * <p>有消息返回消息，没有消息返回null。</p>
      * Fetch data for the topics or partitions specified using assign API
      *
      * @param timeout The amount time, in milliseconds, spent waiting in poll if data is not available. Must not be

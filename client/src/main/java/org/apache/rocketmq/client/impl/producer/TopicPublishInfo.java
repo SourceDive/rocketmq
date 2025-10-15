@@ -24,20 +24,27 @@ import org.apache.rocketmq.common.protocol.route.QueueData;
 import org.apache.rocketmq.common.protocol.route.TopicRouteData;
 
 public class TopicPublishInfo {
+    // 是否是循序消息。
     private boolean orderTopic = false;
+    // 是否从 nameserver 获取到 topic 路由信息。
     private boolean haveTopicRouterInfo = false;
+    // topic下的消息队列列表。
     private List<MessageQueue> messageQueueList = new ArrayList<MessageQueue>();
+    // 负载均衡计数器。
     private volatile ThreadLocalIndex sendWhichQueue = new ThreadLocalIndex();
+    // topic 路由数据。
     private TopicRouteData topicRouteData;
 
     public boolean isOrderTopic() {
         return orderTopic;
     }
 
+    // 设置是否是顺序消息。
     public void setOrderTopic(boolean orderTopic) {
         this.orderTopic = orderTopic;
     }
 
+    // 是否存在消息队列。
     public boolean ok() {
         return null != this.messageQueueList && !this.messageQueueList.isEmpty();
     }
@@ -84,6 +91,7 @@ public class TopicPublishInfo {
         }
     }
 
+    // 选择一条消息队列。
     public MessageQueue selectOneMessageQueue() {
         int index = this.sendWhichQueue.incrementAndGet();
         int pos = Math.abs(index) % this.messageQueueList.size();
