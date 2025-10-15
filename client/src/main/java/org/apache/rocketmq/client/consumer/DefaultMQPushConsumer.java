@@ -47,6 +47,7 @@ import org.apache.rocketmq.remoting.RPCHook;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 
 /**
+ * <p>这是最推荐的消费消息的方式。</p>
  * In most scenarios, this is the mostly recommended class to consume messages.
  * </p>
  *
@@ -273,6 +274,7 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
     }
 
     /**
+     * <p>指定一个唯一的消费者组名称。</p>
      * Constructor specifying consumer group.
      *
      * @param consumerGroup Consumer group.
@@ -733,6 +735,7 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
     }
 
     /**
+     * <p>并发消息，注册回调接口。</p>
      * Register a callback to execute on message arrival for concurrent consuming.
      *
      * @param messageListener message handling callback.
@@ -744,6 +747,7 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
     }
 
     /**
+     * <p>顺序消费，注册回调接口。</p>
      * Register a callback to execute on message arrival for orderly consuming.
      *
      * @param messageListener message handling callback.
