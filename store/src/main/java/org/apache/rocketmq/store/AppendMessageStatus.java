@@ -17,6 +17,7 @@
 package org.apache.rocketmq.store;
 
 /**
+ * <p>追加状态</p>
  * When write a message to the commit log, returns code
  */
 public enum AppendMessageStatus {

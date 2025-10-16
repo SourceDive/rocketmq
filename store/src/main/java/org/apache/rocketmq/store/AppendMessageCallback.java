@@ -21,6 +21,7 @@ import org.apache.rocketmq.common.message.MessageExtBatch;
 import org.apache.rocketmq.store.CommitLog.PutMessageContext;
 
 /**
+ * <p>处理消息序列化协议</p>
  * Write messages callback interface
  */
 public interface AppendMessageCallback {

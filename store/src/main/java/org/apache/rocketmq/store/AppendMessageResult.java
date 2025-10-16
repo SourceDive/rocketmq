@@ -19,22 +19,23 @@ package org.apache.rocketmq.store;
 import java.util.function.Supplier;
 
 /**
+ * <p>追加消息的详细信息</p>
  * When write a message to the commit log, returns results
  */
 public class AppendMessageResult {
     // Return code
     private AppendMessageStatus status;
     // Where to start writing
-    private long wroteOffset;
+    private long wroteOffset; // 写入的物理偏移量
     // Write Bytes
-    private int wroteBytes;
+    private int wroteBytes; // 写入的字节数
     // Message ID
-    private String msgId;
+    private String msgId; // 消息ID
     private Supplier<String> msgIdSupplier;
     // Message storage timestamp
-    private long storeTimestamp;
+    private long storeTimestamp; // 存储时间戳
     // Consume queue's offset(step by one)
-    private long logicsOffset;
+    private long logicsOffset; // 逻辑偏移量
     private long pagecacheRT = 0;
 
     private int msgNum = 1;

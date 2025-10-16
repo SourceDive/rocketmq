@@ -28,11 +28,14 @@ import org.apache.rocketmq.store.stats.BrokerStatsManager;
 
 /**
  * <p>消息存储。</p>
+ * <p>定义存储系统的所有核心操作。</p>
  * This class defines contracting interfaces to implement, allowing third-party vendor to use customized message store.
  */
 public interface MessageStore {
 
+    ///  存储的生命周期
     /**
+     * <p>加载存储。</p>
      * Load previously stored messages.
      *
      * @return true if success; false otherwise.
@@ -40,6 +43,7 @@ public interface MessageStore {
     boolean load();
 
     /**
+     * <p>启动存储。</p>
      * Launch this message store.
      *
      * @throws Exception if there is any error.
@@ -47,16 +51,21 @@ public interface MessageStore {
     void start() throws Exception;
 
     /**
+     * <p>关闭存储。</p>
      * Shutdown this message store.
      */
     void shutdown();
 
     /**
+     * <p>销毁存储。</p>
      * Destroy this message store. Generally, all persistent files should be removed after invocation.
      */
     void destroy();
 
-    /** Store a message into store in async manner, the processor can process the next request
+    ///  消息的写入。
+    /**
+     * <p>存储消息（异步）</p>
+     * Store a message into store in async manner, the processor can process the next request
      *  rather than wait for result
      *  when result is completed, notify the client in async manner
      *
@@ -68,6 +77,7 @@ public interface MessageStore {
     }
 
     /**
+     * <p>存储消息（异步、批量）</p>
      * Store a batch of messages in async manner
      * @param messageExtBatch the message batch
      * @return a CompletableFuture for the result of store operation
@@ -77,6 +87,7 @@ public interface MessageStore {
     }
 
     /**
+     * <p>存储消息。</p>
      * Store a message into store.
      *
      * @param msg Message instance to store
@@ -85,6 +96,7 @@ public interface MessageStore {
     PutMessageResult putMessage(final MessageExtBrokerInner msg);
 
     /**
+     * <p>存储消息（批量）</p>
      * Store a batch of messages.
      *
      * @param messageExtBatch Message batch.
@@ -92,7 +104,9 @@ public interface MessageStore {
      */
     PutMessageResult putMessages(final MessageExtBatch messageExtBatch);
 
+    /// 消息的查询。
     /**
+     * <p>获取消息。</p>
      * Query at most <code>maxMsgNums</code> messages belonging to <code>topic</code> at <code>queueId</code> starting
      * from given <code>offset</code>. Resulting messages will further be screened using provided message filter.
      *
@@ -108,6 +122,7 @@ public interface MessageStore {
         final long offset, final int maxMsgNums, final MessageFilter messageFilter);
 
     /**
+     * <p>获取队列最大偏移量。</p>
      * Get maximum offset of the topic queue.
      *
      * @param topic Topic name.
@@ -117,6 +132,7 @@ public interface MessageStore {
     long getMaxOffsetInQueue(final String topic, final int queueId);
 
     /**
+     * <p>获取队列最小偏移量。</p>
      * Get the minimum offset of the topic queue.
      *
      * @param topic Topic name.
@@ -126,6 +142,7 @@ public interface MessageStore {
     long getMinOffsetInQueue(final String topic, final int queueId);
 
     /**
+     * <p>获取物理偏移量。</p>
      * Get the offset of the message in the commit log, which is also known as physical offset.
      *
      * @param topic Topic of the message to lookup.

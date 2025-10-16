@@ -44,6 +44,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * <p>生产者。</p>
  * <p>发送消息的入口。</p>
  * <p>发送消息到 broker.</p>
  * <p>这个类可被视为线程安全的。</p>

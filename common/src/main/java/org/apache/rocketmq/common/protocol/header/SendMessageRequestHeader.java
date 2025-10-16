@@ -58,7 +58,7 @@ public class SendMessageRequestHeader extends RpcRequestHeader {
     @CFNullable
     private boolean unitMode = false;
     @CFNullable
-    private boolean batch = false;
+    private boolean batch = false; // 是否为批量发送
     private Integer maxReconsumeTimes;
 
     @Override
