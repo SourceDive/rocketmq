@@ -28,7 +28,7 @@ public class SimpleProducerExample {
             logger.info("生产者启动成功");
             
             // 创建消息
-            String topic = "my-debug-topic";
+            String topic = "TestTopic";
             String tag = "my-debug-tag";
             String body = "Hello RocketMQ from my-debug-module!";
             

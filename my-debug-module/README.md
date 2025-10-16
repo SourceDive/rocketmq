@@ -30,21 +30,40 @@ my-debug-module/
 
 ## 使用方法
 
-### 1. 编译模块
+### 🚀 一键演示（推荐）
+
+```bash
+# 进入调试模块目录
+cd my-debug-module
+
+# 一键启动完整演示（自动启动NameServer、Broker、生产者和消费者）
+./one-click-demo.sh
+```
+
+这个脚本会：
+1. 自动编译项目
+2. 自动启动NameServer和Broker
+3. 自动启动生产者和消费者
+4. 自动发送10条测试消息
+5. 显示完整的生产-消费流程
+
+### 手动运行
+
+#### 1. 编译模块
 
 ```bash
 # 在RocketMQ根目录下执行
 mvn clean compile -pl my-debug-module
 ```
 
-### 2. 运行测试
+#### 2. 运行测试
 
 ```bash
 # 运行模块测试
 mvn test -pl my-debug-module
 ```
 
-### 3. 运行示例
+#### 3. 运行示例
 
 #### 方式一：使用运行脚本（推荐）
 ```bash
