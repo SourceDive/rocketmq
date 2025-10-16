@@ -70,6 +70,7 @@ public abstract class NettyRemotingAbstract {
     protected final Semaphore semaphoreAsync;
 
     /**
+     * <p>响应表。</p>
      * This map caches all on-going requests.
      */
     protected final ConcurrentMap<Integer /* opaque */, ResponseFuture> responseTable =
@@ -135,6 +136,7 @@ public abstract class NettyRemotingAbstract {
     }
 
     /**
+     * <p>入口：处理发送的消息。</p>
      * Entry of incoming command processing.
      *
      * <p>
@@ -370,6 +372,7 @@ public abstract class NettyRemotingAbstract {
 
 
     /**
+     * <p>指定线程池。</p>
      * This method specifies thread pool to use while invoking callback methods.
      *
      * @return Dedicated thread pool instance if specified; or null if the callback is supposed to be executed in the

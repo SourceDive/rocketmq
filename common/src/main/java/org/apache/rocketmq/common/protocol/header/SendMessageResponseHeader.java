@@ -31,12 +31,12 @@ import io.netty.buffer.ByteBuf;
 
 public class SendMessageResponseHeader implements CommandCustomHeader, FastCodesHeader {
     @CFNotNull
-    private String msgId;
+    private String msgId; // 消息唯一id，broker 生成
     @CFNotNull
-    private Integer queueId;
+    private Integer queueId; // 消息所在的队列ID
     @CFNotNull
-    private Long queueOffset;
-    private String transactionId;
+    private Long queueOffset; // 消息在队列中的偏移量
+    private String transactionId; // 事务ID，用于事务消息。普通消息为null
 
     @Override
     public void checkFields() throws RemotingCommandException {

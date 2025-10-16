@@ -61,6 +61,9 @@ import org.apache.rocketmq.store.config.MessageStoreConfig;
 import org.apache.rocketmq.store.config.StorePathConfigHelper;
 import org.apache.rocketmq.store.stats.BrokerStatsManager;
 
+/**
+ * 发送消息的处理器。
+ */
 public class SendMessageProcessor extends AbstractSendMessageProcessor {
 
     private List<ConsumeMessageHook> consumeMessageHookList;

@@ -24,20 +24,24 @@ import org.apache.rocketmq.remoting.InvokeCallback;
 import org.apache.rocketmq.remoting.common.SemaphoreReleaseOnlyOnce;
 import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 
+/**
+ * 异步响应结果。
+ */
 public class ResponseFuture {
-    private final int opaque;
-    private final Channel processChannel;
-    private final long timeoutMillis;
+    private final int opaque; // 请求id
+    private final Channel processChannel; // 处理通道
+    private final long timeoutMillis; // 超时时间
     private final InvokeCallback invokeCallback;
     private final long beginTimestamp = System.currentTimeMillis();
     private final CountDownLatch countDownLatch = new CountDownLatch(1);
 
     private final SemaphoreReleaseOnlyOnce once;
 
+    // 确保回调逻辑只被执行一次。
     private final AtomicBoolean executeCallbackOnlyOnce = new AtomicBoolean(false);
-    private volatile RemotingCommand responseCommand;
-    private volatile boolean sendRequestOK = true;
-    private volatile Throwable cause;
+    private volatile RemotingCommand responseCommand; // 响应结果
+    private volatile boolean sendRequestOK = true; // 发送是否成功
+    private volatile Throwable cause; // 异常原因
 
     public ResponseFuture(Channel channel, int opaque, long timeoutMillis, InvokeCallback invokeCallback,
         SemaphoreReleaseOnlyOnce once) {
