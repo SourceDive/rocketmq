@@ -266,8 +266,9 @@
     </appender>
 
     <logger name="RocketmqBroker" additivity="false">
-        <level value="INFO"/>
+        <level value="DEBUG"/>
         <appender-ref ref="RocketmqBrokerAppender"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 
     <logger name="RocketmqProtection" additivity="false">
@@ -330,8 +331,25 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
+    <!-- 消息处理相关日志 -->
+    <logger name="org.apache.rocketmq.broker.processor.SendMessageProcessor" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    
+    <logger name="org.apache.rocketmq.broker.processor.PullMessageProcessor" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    
+    <logger name="org.apache.rocketmq.broker.BrokerController" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
     <root>
         <level value="INFO"/>
         <appender-ref ref="DefaultAppender"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
