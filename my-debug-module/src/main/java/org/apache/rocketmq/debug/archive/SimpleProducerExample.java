@@ -1,9 +1,11 @@
-package org.apache.rocketmq.debug;
+package org.apache.rocketmq.debug.archive;
 
+import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +53,21 @@ public class SimpleProducerExample {
             // 关闭生产者
             producer.shutdown();
             logger.info("生产者已关闭");
+        }
+    }
+
+    public SendResult snedOneMessage(Message message, SendResult sendResult, DefaultMQProducer producer) throws MQBrokerException, RemotingException, InterruptedException, MQClientException {
+        sendResult = producer.send(message);
+        logger.info("消息发送成功: {}", sendResult);
+
+        return sendResult;
+    }
+
+    private SendResult alwaysSend(Message message, SendResult sendResult, DefaultMQProducer producer) throws InterruptedException, MQBrokerException, RemotingException, MQClientException {
+        while (true) {
+            Thread.sleep(3000);
+            sendResult = producer.send(message);
+            logger.info("消息发送成功: {}", sendResult);
         }
     }
 }
