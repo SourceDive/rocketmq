@@ -29,7 +29,7 @@ public class OnlyConsumeOneMessageExample {
         
         // 用于控制是否继续消费的标记
         AtomicBoolean shouldContinue = new AtomicBoolean(true);
-        // 用于确保只处理一条消息的标记
+        // 确保只有一个线程能处理消息
         AtomicBoolean messageProcessed = new AtomicBoolean(false);
         
         try {

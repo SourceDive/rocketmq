@@ -27,8 +27,12 @@ import org.apache.rocketmq.common.ServiceThread;
 import org.apache.rocketmq.logging.InternalLogger;
 import org.apache.rocketmq.common.utils.ThreadUtils;
 
+/**
+ * 拉取消息的任务。
+ */
 public class PullMessageService extends ServiceThread {
     private final InternalLogger log = ClientLogger.getLog();
+    // 拉取请求队列
     private final LinkedBlockingQueue<PullRequest> pullRequestQueue = new LinkedBlockingQueue<PullRequest>();
     private final MQClientInstance mQClientFactory;
     private final ScheduledExecutorService scheduledExecutorService = Executors
@@ -58,6 +62,7 @@ public class PullMessageService extends ServiceThread {
 
     public void executePullRequestImmediately(final PullRequest pullRequest) {
         try {
+            // 将拉取请求放入请求队列队尾。
             this.pullRequestQueue.put(pullRequest);
         } catch (InterruptedException e) {
             log.error("executePullRequestImmediately pullRequestQueue.put", e);
@@ -92,7 +97,9 @@ public class PullMessageService extends ServiceThread {
 
         while (!this.isStopped()) {
             try {
+                // 取出一个拉取请求。
                 PullRequest pullRequest = this.pullRequestQueue.take();
+                // 执行拉取请求
                 this.pullMessage(pullRequest);
             } catch (InterruptedException ignored) {
             } catch (Exception e) {

@@ -85,6 +85,9 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.apache.rocketmq.remoting.netty.NettyClientConfig;
 import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 
+/**
+ * 管理生产者、消费者。
+ */
 public class MQClientInstance {
     private final static long LOCK_TIMEOUT_MILLIS = 3000;
     private final InternalLogger log = ClientLogger.getLog();
@@ -92,9 +95,9 @@ public class MQClientInstance {
     private final int instanceIndex;
     private final String clientId;
     private final long bootTimestamp = System.currentTimeMillis();
-    // key: 生产者组
+    // 生产者表。key: 生产者组
     private final ConcurrentMap<String/* group */, MQProducerInner> producerTable = new ConcurrentHashMap<String, MQProducerInner>();
-    // key: 消费者组
+    // 消费者表。key: 消费者组
     private final ConcurrentMap<String/* group */, MQConsumerInner> consumerTable = new ConcurrentHashMap<String, MQConsumerInner>();
     private final ConcurrentMap<String/* group */, MQAdminExtInner> adminExtTable = new ConcurrentHashMap<String, MQAdminExtInner>();
     private final NettyClientConfig nettyClientConfig;
@@ -966,10 +969,16 @@ public class MQClientInstance {
         }
     }
 
+    /**
+     * 根据生产者组名获取生产者实例。
+     */
     public MQProducerInner selectProducer(final String group) {
         return this.producerTable.get(group);
     }
 
+    /**
+     * 根据消费者组名获取消费者实例。
+     */
     public MQConsumerInner selectConsumer(final String group) {
         return this.consumerTable.get(group);
     }
@@ -983,6 +992,9 @@ public class MQClientInstance {
         return null;
     }
 
+    /**
+     * 查找 broker 地址。
+     */
     public FindBrokerResult findBrokerAddressInSubscribe(
         final String brokerName,
         final long brokerId,

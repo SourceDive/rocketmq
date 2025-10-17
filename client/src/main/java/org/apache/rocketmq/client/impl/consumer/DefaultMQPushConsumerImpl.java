@@ -311,6 +311,7 @@ public class DefaultMQPushConsumerImpl implements MQConsumerInner {
 
         final long beginTimestamp = System.currentTimeMillis();
 
+        // 定义pull回调接口逻辑。
         PullCallback pullCallback = new PullCallback() {
             @Override
             public void onSuccess(PullResult pullResult) {
@@ -318,6 +319,7 @@ public class DefaultMQPushConsumerImpl implements MQConsumerInner {
                     pullResult = DefaultMQPushConsumerImpl.this.pullAPIWrapper.processPullResult(pullRequest.getMessageQueue(), pullResult,
                         subscriptionData);
 
+                    // 判断消息拉取状态。
                     switch (pullResult.getPullStatus()) {
                         case FOUND:
                             long prevRequestOffset = pullRequest.getNextOffset();
@@ -469,6 +471,9 @@ public class DefaultMQPushConsumerImpl implements MQConsumerInner {
         }
     }
 
+    /**
+     * 将拉取请求放到请求队列队尾。
+     */
     private void executePullRequestLater(final PullRequest pullRequest, final long timeDelay) {
         this.mQClientFactory.getPullMessageService().executePullRequestLater(pullRequest, timeDelay);
     }
@@ -596,6 +601,7 @@ public class DefaultMQPushConsumerImpl implements MQConsumerInner {
                     this.defaultMQPushConsumer.changeInstanceNameToPID();
                 }
 
+                // 创建客户端实例。
                 this.mQClientFactory = MQClientManager.getInstance().getOrCreateMQClientInstance(this.defaultMQPushConsumer, this.rpcHook);
 
                 this.rebalanceImpl.setConsumerGroup(this.defaultMQPushConsumer.getConsumerGroup());
@@ -637,6 +643,7 @@ public class DefaultMQPushConsumerImpl implements MQConsumerInner {
 
                 this.consumeMessageService.start();
 
+                // 注册消费者。
                 boolean registerOK = mQClientFactory.registerConsumer(this.defaultMQPushConsumer.getConsumerGroup(), this);
                 if (!registerOK) {
                     this.serviceState = ServiceState.CREATE_JUST;
@@ -663,6 +670,7 @@ public class DefaultMQPushConsumerImpl implements MQConsumerInner {
 
         this.updateTopicSubscribeInfoWhenSubscriptionChanged();
         this.mQClientFactory.checkClientInBroker();
+        // 发送心跳到 broker.
         this.mQClientFactory.sendHeartbeatToAllBrokerWithLock();
         this.mQClientFactory.rebalanceImmediately();
     }

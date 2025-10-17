@@ -19,12 +19,15 @@ package org.apache.rocketmq.client.consumer;
 import java.util.List;
 import org.apache.rocketmq.common.message.MessageExt;
 
+/**
+ * 拉取消息操作的完整结果对象。
+ */
 public class PullResult {
-    private final PullStatus pullStatus;
-    private final long nextBeginOffset;
-    private final long minOffset;
-    private final long maxOffset;
-    private List<MessageExt> msgFoundList;
+    private final PullStatus pullStatus;   // 拉取状态
+    private final long nextBeginOffset;    // 下一次拉取的起始偏移量
+    private final long minOffset;          // 队列最小偏移量(最早消息位置)
+    private final long maxOffset;          // 队列最大偏移量(最新消息位置)
+    private List<MessageExt> msgFoundList; // 拉取到的消息列表
 
     public PullResult(PullStatus pullStatus, long nextBeginOffset, long minOffset, long maxOffset,
         List<MessageExt> msgFoundList) {

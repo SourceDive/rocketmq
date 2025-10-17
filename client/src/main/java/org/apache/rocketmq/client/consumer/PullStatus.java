@@ -16,20 +16,27 @@
  */
 package org.apache.rocketmq.client.consumer;
 
+/**
+ * 拉取状态。
+ */
 public enum PullStatus {
     /**
+     * <p>找到消息。</p>
      * Founded
      */
     FOUND,
     /**
+     * <p>没有新消息。</p>
      * No new message can be pull
      */
     NO_NEW_MSG,
     /**
+     * <p>没有匹配的消息。</p>
      * Filtering results can not match
      */
     NO_MATCHED_MSG,
     /**
+     * <p>偏移量非法。</p>
      * Illegal offset,may be too big or too small
      */
     OFFSET_ILLEGAL
