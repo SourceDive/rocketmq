@@ -35,6 +35,7 @@ public class ResponseFuture {
     private final long beginTimestamp = System.currentTimeMillis();
     private final CountDownLatch countDownLatch = new CountDownLatch(1);
 
+    // 信号量释放器
     private final SemaphoreReleaseOnlyOnce once;
 
     // 确保回调逻辑只被执行一次。
