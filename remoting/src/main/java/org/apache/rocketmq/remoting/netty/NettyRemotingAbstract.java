@@ -61,13 +61,17 @@ public abstract class NettyRemotingAbstract {
 
     /**
      * Semaphore to limit maximum number of on-going one-way requests, which protects system memory footprint.
+     * @see NettySystemConfig#COM_ROCKETMQ_REMOTING_CLIENT_ONEWAY_SEMAPHORE_VALUE
      */
-    protected final Semaphore semaphoreOneway;
+    protected final Semaphore semaphoreOneway; // 默认 65535
 
     /**
+     * <p>异步请求信号量。</p>
+     * <p>控制异步请求并发数量。</p>
      * Semaphore to limit maximum number of on-going asynchronous requests, which protects system memory footprint.
+     * @see NettySystemConfig#COM_ROCKETMQ_REMOTING_CLIENT_ASYNC_SEMAPHORE_VALUE
      */
-    protected final Semaphore semaphoreAsync;
+    protected final Semaphore semaphoreAsync; // 默认 65535
 
     /**
      * <p>响应表。</p>
@@ -455,6 +459,7 @@ public abstract class NettyRemotingAbstract {
         final InvokeCallback invokeCallback)
         throws InterruptedException, RemotingTooMuchRequestException, RemotingTimeoutException, RemotingSendRequestException {
         long beginStartTime = System.currentTimeMillis();
+        // 获取请求id.
         final int opaque = request.getOpaque();
         boolean acquired = this.semaphoreAsync.tryAcquire(timeoutMillis, TimeUnit.MILLISECONDS);
         if (acquired) {
