@@ -25,6 +25,9 @@ import org.apache.rocketmq.client.log.ClientLogger;
 import org.apache.rocketmq.logging.InternalLogger;
 import org.apache.rocketmq.remoting.RPCHook;
 
+/**
+ * 管理 MQClientInstance。
+ */
 public class MQClientManager {
     private final static InternalLogger log = ClientLogger.getLog();
     private static MQClientManager instance = new MQClientManager(); // 这个变量命名太呆了。问了deepseek，它也赞同。

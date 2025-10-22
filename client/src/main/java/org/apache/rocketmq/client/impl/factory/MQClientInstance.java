@@ -119,7 +119,7 @@ public class MQClientInstance {
     private final ClientRemotingProcessor clientRemotingProcessor;
     private final PullMessageService pullMessageService;
     private final RebalanceService rebalanceService;
-    private final DefaultMQProducer defaultMQProducer;
+    private final DefaultMQProducer defaultMQProducer; // 框架内部的生产者。
     private final ConsumerStatsManager consumerStatsManager;
     private final AtomicLong sendHeartbeatTimesTotal = new AtomicLong(0);
     private ServiceState serviceState = ServiceState.CREATE_JUST;
@@ -227,6 +227,9 @@ public class MQClientInstance {
         return mqList;
     }
 
+    /**
+     * 生产者实例、消费者实例都会调用到这个方法。
+     */
     public void start() throws MQClientException {
 
         synchronized (this) {
@@ -876,6 +879,9 @@ public class MQClientInstance {
         }
     }
 
+    /**
+     * 注册消费者实例。
+     */
     public synchronized boolean registerConsumer(final String group, final MQConsumerInner consumer) {
         if (null == group || null == consumer) {
             return false;
@@ -922,6 +928,9 @@ public class MQClientInstance {
         }
     }
 
+    /**
+     * 注册生产者实例。
+     */
     public synchronized boolean registerProducer(final String group, final DefaultMQProducerImpl producer) {
         if (null == group || null == producer) {
             return false;

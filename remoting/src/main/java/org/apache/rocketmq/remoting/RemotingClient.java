@@ -25,6 +25,9 @@ import org.apache.rocketmq.remoting.exception.RemotingTooMuchRequestException;
 import org.apache.rocketmq.remoting.netty.NettyRequestProcessor;
 import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 
+/**
+ * 这个就是通用的远程通信的服务。
+ */
 public interface RemotingClient extends RemotingService {
 
     // 更新 nameserver 地址列表
