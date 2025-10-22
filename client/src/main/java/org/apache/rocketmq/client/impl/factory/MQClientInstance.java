@@ -237,12 +237,19 @@ public class MQClientInstance {
                     if (null == this.clientConfig.getNamesrvAddr()) {
                         this.mQClientAPIImpl.fetchNameServerAddr();
                     }
+
                     // Start request-response channel
+                    // 启动远程客户端服务。
                     this.mQClientAPIImpl.start();
+
                     // Start various schedule tasks
+                    // 定时拉取 nameserver 地址。
                     this.startScheduledTask();
+
                     // Start pull service
+                    /// 启动拉取消息服务
                     this.pullMessageService.start();
+
                     // Start rebalance service
                     this.rebalanceService.start();
                     // Start push service

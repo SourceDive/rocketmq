@@ -40,6 +40,7 @@ public abstract class ServiceThread implements Runnable {
 
     }
 
+    // 给子类以实现。获取对应的服务名称。
     public abstract String getServiceName();
 
     public void start() {

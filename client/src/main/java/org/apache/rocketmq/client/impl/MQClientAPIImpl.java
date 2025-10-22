@@ -224,6 +224,9 @@ public class MQClientAPIImpl {
         return remotingClient;
     }
 
+    /**
+     * 获取 nameserver 地址。
+     */
     public String fetchNameServerAddr() {
         try {
             String addrs = this.topAddressing.fetchNSAddr();
