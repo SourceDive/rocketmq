@@ -38,11 +38,8 @@ public class SimpleProducerExample {
             
             // 发送消息
             SendResult sendResult;
-            while (true) {
-                Thread.sleep(3000);
-                sendResult = producer.send(message);
-                logger.info("消息发送成功: {}", sendResult);
-            }
+            sendResult = producer.send(message);
+            logger.info("消息发送成功: {}", sendResult);
 
 
         } catch (MQClientException e) {

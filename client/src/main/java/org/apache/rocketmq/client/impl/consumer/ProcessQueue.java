@@ -38,6 +38,7 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.protocol.body.ProcessQueueInfo;
 
 /**
+ * <p>流量控制检查。</p>
  * Queue consumption snapshot
  */
 public class ProcessQueue {
@@ -47,9 +48,9 @@ public class ProcessQueue {
     private final static long PULL_MAX_IDLE_TIME = Long.parseLong(System.getProperty("rocketmq.client.pull.pullMaxIdleTime", "120000"));
     private final InternalLogger log = ClientLogger.getLog();
     private final ReadWriteLock treeMapLock = new ReentrantReadWriteLock();
-    private final TreeMap<Long, MessageExt> msgTreeMap = new TreeMap<Long, MessageExt>();
-    private final AtomicLong msgCount = new AtomicLong();
-    private final AtomicLong msgSize = new AtomicLong();
+    private final TreeMap<Long, MessageExt> msgTreeMap = new TreeMap<Long, MessageExt>(); // 消息存储
+    private final AtomicLong msgCount = new AtomicLong(); // 消息数量计数
+    private final AtomicLong msgSize = new AtomicLong();  // 消息总大小
     private final Lock consumeLock = new ReentrantLock();
     /**
      * A subset of msgTreeMap, will only be used when orderly consume
@@ -57,8 +58,7 @@ public class ProcessQueue {
     private final TreeMap<Long, MessageExt> consumingMsgOrderlyTreeMap = new TreeMap<Long, MessageExt>();
     private final AtomicLong tryUnlockTimes = new AtomicLong(0);
     private volatile long queueOffsetMax = 0L;
-    // 标记ProcessQueue是否已被丢弃
-    private volatile boolean dropped = false;
+    private volatile boolean dropped = false;  // 标记ProcessQueue是否已被丢弃
     private volatile long lastPullTimestamp = System.currentTimeMillis();
     private volatile long lastConsumeTimestamp = System.currentTimeMillis();
     private volatile boolean locked = false;

@@ -714,6 +714,9 @@ public class MQClientAPIImpl {
         return sendResult;
     }
 
+    /**
+     * 处理拉取消息。
+     */
     public PullResult pullMessage(
         final String addr,
         final PullMessageRequestHeader requestHeader,
@@ -740,6 +743,9 @@ public class MQClientAPIImpl {
         return null;
     }
 
+    /**
+     * 处理异步拉取消息的执行。
+     */
     private void pullMessageAsync(
         final String addr,
         final RemotingCommand request,
@@ -749,7 +755,9 @@ public class MQClientAPIImpl {
         this.remotingClient.invokeAsync(addr, request, timeoutMillis, new InvokeCallback() {
             @Override
             public void operationComplete(ResponseFuture responseFuture) {
+                // 获取响应结果。
                 RemotingCommand response = responseFuture.getResponseCommand();
+
                 if (response != null) {
                     try {
                         PullResult pullResult = MQClientAPIImpl.this.processPullResponse(response, addr);
@@ -772,6 +780,9 @@ public class MQClientAPIImpl {
         });
     }
 
+    /**
+     * 处理同步拉取消息的执行。
+     */
     private PullResult pullMessageSync(
         final String addr,
         final RemotingCommand request,

@@ -469,6 +469,9 @@ public abstract class NettyRemotingAbstract {
             final SemaphoreReleaseOnlyOnce once = new SemaphoreReleaseOnlyOnce(this.semaphoreAsync);
             long costTime = System.currentTimeMillis() - beginStartTime;
             // 超时，释放许可证。
+            // 注意，这里的timeoutMillis是整个流程设置的超时时间
+            // 如果执行到这里已经超时，后面就不需要继续执行下去了
+            // 快速失败。
             if (timeoutMillis < costTime) {
                 once.release();
                 throw new RemotingTimeoutException("invokeAsyncImpl call timeout");
