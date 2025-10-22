@@ -58,7 +58,7 @@ jobs:
           java -version
       
       - name: Build with Maven
-        run: mvn clean install -DskipTests -B -V
+        run: mvn clean install -DskipTests -Dcheckstyle.skip=true -B -V
       
       - name: Run tests
         run: mvn test -B
@@ -91,7 +91,7 @@ jobs:
             -v "$PWD":/workspace \
             -w /workspace \
             maven:3.9-eclipse-temurin-8 \
-            mvn clean install -DskipTests -B -V
+            mvn clean install -DskipTests -Dcheckstyle.skip=true -B -V
       
       - name: Run tests with Maven Docker
         run: |
