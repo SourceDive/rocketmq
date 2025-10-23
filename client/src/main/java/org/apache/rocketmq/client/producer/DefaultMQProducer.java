@@ -269,6 +269,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
     }
 
     /**
+     * <p>启动生产者实例。</p>
      * Start this producer instance. </p>
      *
      * <strong> Much internal initializing procedures are carried out to make this instance prepared, thus, it's a must
@@ -290,6 +291,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
     }
 
     /**
+     * <p>关闭生产者实例。</p>
      * This method shuts down this producer instance and releases related resources.
      */
     @Override
@@ -313,7 +315,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
     }
 
     /**
-     * <p>异步发送消息。</p>
+     * <p>同步发送消息。</p>
      * Send message in synchronous mode. This method returns only when the sending procedure totally completes. </p>
      *
      * <strong>Warn:</strong> this method has internal retry-mechanism, that is, internal implementation will retry
@@ -335,6 +337,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
     }
 
     /**
+     * <p>同步发送消息。有超时。</p>
      * Same to {@link #send(Message)} with send timeout specified in addition.
      *
      * @param msg     Message to send.
@@ -353,7 +356,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
     }
 
     /**
-     * <p>发送异步消息。</p>
+     * <p>异步发送消息。</p>
      * Send message to broker asynchronously. </p>
      * <p>
      * This method returns immediately. On sending completion, <code>sendCallback</code> will be executed. </p>
@@ -376,6 +379,7 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
     }
 
     /**
+     * <p>异步发送消息。有超时。</p>
      * Same to {@link #send(Message, SendCallback)} with send timeout specified in addition.
      *
      * @param msg          message to send.

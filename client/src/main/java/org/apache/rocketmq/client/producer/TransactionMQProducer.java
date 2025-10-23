@@ -68,6 +68,7 @@ public class TransactionMQProducer extends DefaultMQProducer {
     }
 
     /**
+     * <p>废弃的方法。不看。</p>
      * This method will be removed in the version 5.0.0, method <code>sendMessageInTransaction(Message,Object)</code>}
      * is recommended.
      */

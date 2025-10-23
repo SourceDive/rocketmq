@@ -156,16 +156,18 @@ public class BrokerController {
     private RemotingServer remotingServer;
     private RemotingServer fastRemotingServer;
     private TopicConfigManager topicConfigManager;
-    private ExecutorService sendMessageExecutor;
+
+    ///  线程池管理
+    private ExecutorService sendMessageExecutor; // 发送消息线程池
     private ExecutorService putMessageFutureExecutor;
-    private ExecutorService pullMessageExecutor;
+    private ExecutorService pullMessageExecutor; // 拉取消息线程池
     private ExecutorService replyMessageExecutor;
-    private ExecutorService queryMessageExecutor;
+    private ExecutorService queryMessageExecutor; // 查询消息线程池
     private ExecutorService adminBrokerExecutor;
-    private ExecutorService clientManageExecutor;
+    private ExecutorService clientManageExecutor; // 客户端管理线程池
     private ExecutorService heartbeatExecutor;
-    private ExecutorService consumerManageExecutor;
-    private ExecutorService endTransactionExecutor;
+    private ExecutorService consumerManageExecutor; // 消费者管理线程池
+    private ExecutorService endTransactionExecutor; // 事务消息线程池
     private boolean updateMasterHAServerAddrPeriodically = false;
     private BrokerStats brokerStats;
     private InetSocketAddress storeHost;
