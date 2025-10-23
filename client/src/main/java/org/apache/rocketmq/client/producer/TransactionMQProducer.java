@@ -92,6 +92,7 @@ public class TransactionMQProducer extends DefaultMQProducer {
         }
 
         msg.setTopic(NamespaceUtil.wrapNamespace(this.getNamespace(), msg.getTopic()));
+        /// 入口
         return this.defaultMQProducerImpl.sendMessageInTransaction(msg, null, arg);
     }
 

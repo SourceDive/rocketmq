@@ -96,12 +96,18 @@ public class SendMessageProcessor extends AbstractSendMessageProcessor {
             case RequestCode.CONSUMER_SEND_MSG_BACK:
                 return this.asyncConsumerSendMsgBack(ctx, request);
             default:
+                // 组装请求头。
                 SendMessageRequestHeader requestHeader = parseRequestHeader(request);
                 if (requestHeader == null) {
                     return CompletableFuture.completedFuture(null);
                 }
+                // 组装 trace 上下文。
                 mqtraceContext = buildMsgContext(ctx, requestHeader);
+
+                // 执行钩子
                 this.executeSendMessageHookBefore(ctx, request, mqtraceContext);
+
+                // 发送
                 if (requestHeader.isBatch()) {
                     return this.asyncSendBatchMessage(ctx, request, mqtraceContext, requestHeader);
                 } else {
@@ -286,6 +292,7 @@ public class SendMessageProcessor extends AbstractSendMessageProcessor {
             queueIdInt = randomQueueId(topicConfig.getWriteQueueNums());
         }
 
+        // 组装消息。
         MessageExtBrokerInner msgInner = new MessageExtBrokerInner();
         msgInner.setTopic(requestHeader.getTopic());
         msgInner.setQueueId(queueIdInt);
@@ -316,6 +323,7 @@ public class SendMessageProcessor extends AbstractSendMessageProcessor {
         }
 
         CompletableFuture<PutMessageResult> putMessageResult = null;
+        // 获取事务消息标识。
         String transFlag = origProps.get(MessageConst.PROPERTY_TRANSACTION_PREPARED);
         if (Boolean.parseBoolean(transFlag)) {
             if (this.brokerController.getBrokerConfig().isRejectTransactionMessage()) {

@@ -28,7 +28,7 @@ public class TopicValidator {
     public static final String AUTO_CREATE_TOPIC_KEY_TOPIC = "TBW102"; // Will be created at broker when isAutoCreateTopicEnable
     public static final String RMQ_SYS_SCHEDULE_TOPIC = "SCHEDULE_TOPIC_XXXX";
     public static final String RMQ_SYS_BENCHMARK_TOPIC = "BenchmarkTest";
-    // 存放半事务消息的 topic
+    // 存放半消息的 topic
     public static final String RMQ_SYS_TRANS_HALF_TOPIC = "RMQ_SYS_TRANS_HALF_TOPIC";
     public static final String RMQ_SYS_TRACE_TOPIC = "RMQ_SYS_TRACE_TOPIC";
     public static final String RMQ_SYS_TRANS_OP_HALF_TOPIC = "RMQ_SYS_TRANS_OP_HALF_TOPIC";
@@ -36,6 +36,7 @@ public class TopicValidator {
     public static final String RMQ_SYS_SELF_TEST_TOPIC = "SELF_TEST_TOPIC";
     public static final String RMQ_SYS_OFFSET_MOVED_EVENT = "OFFSET_MOVED_EVENT";
 
+    // 框架topic前缀标识
     public static final String SYSTEM_TOPIC_PREFIX = "rmq_sys_";
     public static final boolean[] VALID_CHAR_BIT_MAP = new boolean[128];
     private static final int TOPIC_MAX_LENGTH = 127;
@@ -48,6 +49,7 @@ public class TopicValidator {
     private static final Set<String> NOT_ALLOWED_SEND_TOPIC_SET = new HashSet<String>();
 
     static {
+        // 框架保留的 topic.
         SYSTEM_TOPIC_SET.add(AUTO_CREATE_TOPIC_KEY_TOPIC);
         SYSTEM_TOPIC_SET.add(RMQ_SYS_SCHEDULE_TOPIC);
         SYSTEM_TOPIC_SET.add(RMQ_SYS_BENCHMARK_TOPIC);

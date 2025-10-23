@@ -17,8 +17,8 @@
 package org.apache.rocketmq.remoting.netty;
 
 public enum NettyEventType {
-    CONNECT,
-    CLOSE,
-    IDLE,
-    EXCEPTION
+    CONNECT, // 连接建立
+    CLOSE,   // 连接关闭
+    IDLE,    // 连接空闲
+    EXCEPTION // 异常
 }

@@ -60,6 +60,7 @@ public abstract class NettyRemotingAbstract {
     private static final InternalLogger log = InternalLoggerFactory.getLogger(RemotingHelper.ROCKETMQ_REMOTING);
 
     /**
+     * <p>单向请求的 semaphore.</p>
      * Semaphore to limit maximum number of on-going one-way requests, which protects system memory footprint.
      * @see NettySystemConfig#COM_ROCKETMQ_REMOTING_CLIENT_ONEWAY_SEMAPHORE_VALUE
      */

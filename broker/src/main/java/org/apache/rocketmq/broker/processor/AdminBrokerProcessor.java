@@ -141,6 +141,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import org.apache.rocketmq.store.config.BrokerRole;
 
+/**
+ * broker 管理处理器。
+ */
 public class AdminBrokerProcessor extends AsyncNettyRequestProcessor {
     private static final InternalLogger log = InternalLoggerFactory.getLogger(LoggerName.BROKER_LOGGER_NAME);
     private final BrokerController brokerController;

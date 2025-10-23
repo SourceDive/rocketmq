@@ -16,6 +16,9 @@
  */
 package org.apache.rocketmq.remoting.common;
 
+/**
+ * 工具类，可以返回多个值。
+ */
 public class Pair<T1, T2> {
     private T1 object1;
     private T2 object2;
