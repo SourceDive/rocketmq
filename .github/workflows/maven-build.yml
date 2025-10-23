@@ -85,10 +85,24 @@ jobs:
         with:
           fetch-depth: 0
       
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-maven-docker-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-docker-
+      
       - name: Build with Maven Docker
         run: |
           docker run --rm \
             -v "$PWD":/workspace \
+            -v "$HOME/.m2":/root/.m2 \
             -w /workspace \
             maven:3.9-eclipse-temurin-8 \
             mvn clean install -DskipTests -Dcheckstyle.skip=true -B -V
@@ -97,6 +111,7 @@ jobs:
         run: |
           docker run --rm \
             -v "$PWD":/workspace \
+            -v "$HOME/.m2":/root/.m2 \
             -w /workspace \
             maven:3.9-eclipse-temurin-8 \
             mvn test -B
