@@ -333,6 +333,7 @@ public class SendMessageProcessor extends AbstractSendMessageProcessor {
                                 + "] sending transaction message is forbidden");
                 return CompletableFuture.completedFuture(response);
             }
+            // 调用事务消息服务的异步写入。
             putMessageResult = this.brokerController.getTransactionalMessageService().asyncPrepareMessage(msgInner);
         } else {
             // 异步写入消息。

@@ -36,7 +36,7 @@ public class EndTransactionRequestHeader extends RpcRequestHeader {
     // TRANSACTION_NOT_TYPE
 
     @CFNullable
-    private Boolean fromTransactionCheck = false;
+    private Boolean fromTransactionCheck = false; // 标识请求是否来自于事务回查。
 
     @CFNotNull
     private String msgId;

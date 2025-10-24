@@ -28,7 +28,7 @@ import java.util.concurrent.CompletableFuture;
 public interface TransactionalMessageService {
 
     /**
-     * <p>准备事务消息。</p>
+     * <p>处理半消息。</p>
      * Process prepare message, in common, we should put this message to storage service.
      *
      * @param messageInner Prepare(Half) message.
@@ -37,6 +37,7 @@ public interface TransactionalMessageService {
     PutMessageResult prepareMessage(MessageExtBrokerInner messageInner);
 
     /**
+     * <p>处理半消息(异步)。</p>
      * Process prepare message in async manner, we should put this message to storage service
      *
      * @param messageInner Prepare(Half) message.
@@ -45,7 +46,7 @@ public interface TransactionalMessageService {
     CompletableFuture<PutMessageResult> asyncPrepareMessage(MessageExtBrokerInner messageInner);
 
     /**
-     * <p>删除事务消息。</p>
+     * <p>删除半消息。</p>
      * Delete prepare message when this message has been committed or rolled back.
      *
      * @param messageExt
@@ -53,6 +54,7 @@ public interface TransactionalMessageService {
     boolean deletePrepareMessage(MessageExt messageExt);
 
     /**
+     * <p>提交半消息。</p>
      * Invoked to process commit prepare message.
      *
      * @param requestHeader Commit message request header.
@@ -61,6 +63,7 @@ public interface TransactionalMessageService {
     OperationResult commitMessage(EndTransactionRequestHeader requestHeader);
 
     /**
+     * <p>回滚半消息。</p>
      * Invoked to roll back prepare message.
      *
      * @param requestHeader Prepare message request header.
@@ -69,7 +72,7 @@ public interface TransactionalMessageService {
     OperationResult rollbackMessage(EndTransactionRequestHeader requestHeader);
 
     /**
-     * <p>回查事务消息。</p>
+     * <p>回查半消息。</p>
      * Traverse uncommitted/unroll back half message and send check back request to producer to obtain transaction
      * status.
      *
@@ -83,6 +86,7 @@ public interface TransactionalMessageService {
     void check(long transactionTimeout, int transactionCheckMax, AbstractTransactionalMessageCheckListener listener);
 
     /**
+     * <p>是否启动事务消息服务。</p>
      * Open transaction service.
      *
      * @return If open success, return true.
@@ -90,6 +94,7 @@ public interface TransactionalMessageService {
     boolean open();
 
     /**
+     * <p>是否关闭事务消息服务。</p>
      * Close transaction service.
      */
     void close();

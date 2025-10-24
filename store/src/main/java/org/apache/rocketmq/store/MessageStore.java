@@ -87,7 +87,7 @@ public interface MessageStore {
     }
 
     /**
-     * <p>存储消息。</p>
+     * <p>存储消息(同步)。</p>
      * Store a message into store.
      *
      * @param msg Message instance to store
@@ -96,7 +96,7 @@ public interface MessageStore {
     PutMessageResult putMessage(final MessageExtBrokerInner msg);
 
     /**
-     * <p>存储消息（批量）</p>
+     * <p>存储消息（批量、同步）</p>
      * Store a batch of messages.
      *
      * @param messageExtBatch Message batch.
@@ -163,6 +163,7 @@ public interface MessageStore {
     long getOffsetInQueueByTime(final String topic, final int queueId, final long timestamp);
 
     /**
+     * <p>根据给定的偏移量查找消息。</p>
      * Look up the message by given commit log offset.
      *
      * @param commitLogOffset physical offset.
