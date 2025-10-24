@@ -127,9 +127,10 @@ public class EndTransactionProcessor extends AsyncNettyRequestProcessor {
         }
         OperationResult result = new OperationResult();
         if (MessageSysFlag.TRANSACTION_COMMIT_TYPE == requestHeader.getCommitOrRollback()) {
-            // 取出半消息。
+            // 1、取出半消息。
             result = this.brokerController.getTransactionalMessageService().commitMessage(requestHeader);
 
+            // 2、将转换后的消息放入到 store 中。
             if (result.getResponseCode() == ResponseCode.SUCCESS) {
                 RemotingCommand res = checkPrepareMessage(result.getPrepareMessage(), requestHeader);
                 if (res.getCode() == ResponseCode.SUCCESS) {
@@ -141,6 +142,7 @@ public class EndTransactionProcessor extends AsyncNettyRequestProcessor {
                     msgInner.setStoreTimestamp(result.getPrepareMessage().getStoreTimestamp());
                     MessageAccessor.clearProperty(msgInner, MessageConst.PROPERTY_TRANSACTION_PREPARED); // 移除事务消息标识。
 
+                    // 保存到 store 中。
                     RemotingCommand sendResult = sendFinalMessage(msgInner);
                     if (sendResult.getCode() == ResponseCode.SUCCESS) {
                         this.brokerController.getTransactionalMessageService().deletePrepareMessage(result.getPrepareMessage());
@@ -150,7 +152,10 @@ public class EndTransactionProcessor extends AsyncNettyRequestProcessor {
                 return res;
             }
         } else if (MessageSysFlag.TRANSACTION_ROLLBACK_TYPE == requestHeader.getCommitOrRollback()) {
+            // 1、取出半消息。
             result = this.brokerController.getTransactionalMessageService().rollbackMessage(requestHeader);
+
+            // 2、删除半消息。
             if (result.getResponseCode() == ResponseCode.SUCCESS) {
                 RemotingCommand res = checkPrepareMessage(result.getPrepareMessage(), requestHeader);
                 if (res.getCode() == ResponseCode.SUCCESS) {
@@ -199,6 +204,9 @@ public class EndTransactionProcessor extends AsyncNettyRequestProcessor {
         return response;
     }
 
+    /**
+     * 构造真实消息。
+     */
     private MessageExtBrokerInner endMessageTransaction(MessageExt msgExt/*半消息*/) {
         MessageExtBrokerInner msgInner = new MessageExtBrokerInner();
         msgInner.setTopic(msgExt.getUserProperty(MessageConst.PROPERTY_REAL_TOPIC));

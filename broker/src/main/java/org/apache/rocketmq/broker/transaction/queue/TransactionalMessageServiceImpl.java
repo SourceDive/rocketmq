@@ -479,6 +479,7 @@ public class TransactionalMessageServiceImpl implements TransactionalMessageServ
         }
     }
 
+    /// 这里的 commit 和 rollback 逻辑都是一样的。都是把半消息给取出来。
     @Override
     public OperationResult commitMessage(EndTransactionRequestHeader requestHeader) {
         return getHalfMessageByOffset(requestHeader.getCommitLogOffset());
