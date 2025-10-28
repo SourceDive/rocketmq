@@ -96,9 +96,9 @@ public class BrokerConfig {
 
     private int filterServerNums = 0;
 
-    private boolean longPollingEnable = true;
+    private boolean longPollingEnable = true; // 是否启用长轮询
 
-    private long shortPollingTimeMills = 1000;
+    private long shortPollingTimeMills = 1000; // 短轮询时间
 
     private boolean notifyConsumerIdsChangedEnable = true;
 
