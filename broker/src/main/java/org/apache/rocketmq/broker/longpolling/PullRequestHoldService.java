@@ -46,18 +46,21 @@ public class PullRequestHoldService extends ServiceThread {
         this.brokerController = brokerController;
     }
 
+    /**
+     * 暂停拉取请求。
+     */
     public void suspendPullRequest(final String topic, final int queueId, final PullRequest pullRequest) {
         String key = this.buildKey(topic, queueId);
-        ManyPullRequest mpr = this.pullRequestTable.get(key);
-        if (null == mpr) {
-            mpr = new ManyPullRequest();
-            ManyPullRequest prev = this.pullRequestTable.putIfAbsent(key, mpr);
+        ManyPullRequest pullRequestList = this.pullRequestTable.get(key);
+        if (null == pullRequestList) {
+            pullRequestList = new ManyPullRequest();
+            ManyPullRequest prev = this.pullRequestTable.putIfAbsent(key, pullRequestList);
             if (prev != null) {
-                mpr = prev;
+                pullRequestList = prev;
             }
         }
 
-        mpr.addPullRequest(pullRequest);
+        pullRequestList.addPullRequest(pullRequest);
     }
 
     /**

@@ -208,7 +208,10 @@ public abstract class NettyRemotingAbstract {
                 public void run() {
                     try {
                         String remoteAddr = RemotingHelper.parseChannelRemoteAddr(ctx.channel());
+                        // 钩子。
                         doBeforeRpcHooks(remoteAddr, cmd);
+
+                        // 定义响应回调。
                         final RemotingResponseCallback callback = new RemotingResponseCallback() {
                             @Override
                             public void callback(RemotingCommand response) {
@@ -219,6 +222,7 @@ public abstract class NettyRemotingAbstract {
                                         response.markResponseType();
                                         response.setSerializeTypeCurrentRPC(cmd.getSerializeTypeCurrentRPC());
                                         try {
+                                            // 将响应写入网络。
                                             ctx.writeAndFlush(response);
                                         } catch (Throwable e) {
                                             log.error("process request over, but response failed", e);
@@ -226,6 +230,7 @@ public abstract class NettyRemotingAbstract {
                                             log.error(response.toString());
                                         }
                                     } else {
+                                        // 在 response 为 null 的情况下什么也不会去做。
                                     }
                                 }
                             }

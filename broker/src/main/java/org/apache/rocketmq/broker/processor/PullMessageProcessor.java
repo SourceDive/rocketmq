@@ -96,6 +96,8 @@ public class PullMessageProcessor extends AsyncNettyRequestProcessor {
         final long beginTimeMills = this.brokerController.getMessageStore().now();
         RemotingCommand response = RemotingCommand.createResponseCommand(PullMessageResponseHeader.class);
         final PullMessageResponseHeader responseHeader = (PullMessageResponseHeader) response.readCustomHeader();
+
+        // 获取请求头。
         final PullMessageRequestHeader requestHeader =
             (PullMessageRequestHeader) request.decodeCommandCustomHeader(PullMessageRequestHeader.class);
 
@@ -109,6 +111,7 @@ public class PullMessageProcessor extends AsyncNettyRequestProcessor {
             return response;
         }
 
+        // 获取订阅组配置。
         SubscriptionGroupConfig subscriptionGroupConfig =
             this.brokerController.getSubscriptionGroupManager().findSubscriptionGroupConfig(requestHeader.getConsumerGroup());
         if (null == subscriptionGroupConfig) {
@@ -239,6 +242,7 @@ public class PullMessageProcessor extends AsyncNettyRequestProcessor {
                 this.brokerController.getConsumerFilterManager());
         }
 
+        // 去 store 中获取消息。
         final GetMessageResult getMessageResult =
             this.brokerController.getMessageStore().getMessage(requestHeader.getConsumerGroup(), requestHeader.getTopic(),
                 requestHeader.getQueueId(), requestHeader.getQueueOffset(), requestHeader.getMaxMsgNums(), messageFilter);
@@ -279,6 +283,7 @@ public class PullMessageProcessor extends AsyncNettyRequestProcessor {
                 responseHeader.setSuggestWhichBrokerId(MixAll.MASTER_ID);
             }
 
+            // 根据拉取结果构建响应。
             switch (getMessageResult.getStatus()) {
                 case FOUND:
                     response.setCode(ResponseCode.SUCCESS);
@@ -329,6 +334,7 @@ public class PullMessageProcessor extends AsyncNettyRequestProcessor {
                     break;
             }
 
+            // 钩子（暂时忽略）
             if (this.hasConsumeMessageHook()) {
                 ConsumeMessageContext context = new ConsumeMessageContext();
                 context.setConsumerGroup(requestHeader.getConsumerGroup());
@@ -409,6 +415,7 @@ public class PullMessageProcessor extends AsyncNettyRequestProcessor {
                     }
                     break;
                 case ResponseCode.PULL_NOT_FOUND:
+                    // 长轮询的处理在这里。
 
                     if (brokerAllowSuspend && hasSuspendFlag) {
                         long pollingTimeMills = suspendTimeoutMillisLong;
@@ -422,7 +429,8 @@ public class PullMessageProcessor extends AsyncNettyRequestProcessor {
                         PullRequest pullRequest = new PullRequest(request, channel, pollingTimeMills,
                             this.brokerController.getMessageStore().now(), offset, subscriptionData, messageFilter);
                         this.brokerController.getPullRequestHoldService().suspendPullRequest(topic, queueId, pullRequest);
-                        response = null;
+                        response = null; // 这里为null，外面的回调函数就不会去处理response了，
+                                         // 非null的响应才会被写入网络中
                         break;
                     }
 
