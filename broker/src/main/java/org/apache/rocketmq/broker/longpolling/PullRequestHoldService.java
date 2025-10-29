@@ -134,6 +134,7 @@ public class PullRequestHoldService extends ServiceThread {
         if (mpr != null) {
             List<PullRequest> requestList = mpr.cloneListAndClear();
             if (requestList != null) {
+                // 需要重新挂起的请求列表
                 List<PullRequest> replayList = new ArrayList<PullRequest>();
 
                 for (PullRequest request : requestList) {
@@ -142,6 +143,7 @@ public class PullRequestHoldService extends ServiceThread {
                         newestOffset = this.brokerController.getMessageStore().getMaxOffsetInQueue(topic, queueId);
                     }
 
+                    // 队列当前最大偏移量大于消息者的请求偏移量
                     if (newestOffset > request.getPullFromThisOffset()) {
                         boolean match = request.getMessageFilter().isMatchedByConsumeQueue(tagsCode,
                             new ConsumeQueueExt.CqExtUnit(tagsCode, msgStoreTime, filterBitMap));

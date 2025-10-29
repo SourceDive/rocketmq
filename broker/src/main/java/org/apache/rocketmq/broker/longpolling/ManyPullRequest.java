@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <p>长轮询专用的存储容器。</p>
  * 一个包装类，管理多个拉取请求。
  */
 public class ManyPullRequest {

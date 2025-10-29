@@ -559,6 +559,8 @@ public class PullMessageProcessor extends AsyncNettyRequestProcessor {
 
     public void executeRequestWhenWakeup(final Channel channel,
         final RemotingCommand request) throws RemotingCommandException {
+
+        // 定义响应任务。
         Runnable run = new Runnable() {
             @Override
             public void run() {
@@ -591,6 +593,8 @@ public class PullMessageProcessor extends AsyncNettyRequestProcessor {
                 }
             }
         };
+
+        // 提交任务。
         this.brokerController.getPullMessageExecutor().submit(new RequestTask(run, channel, request));
     }
 
