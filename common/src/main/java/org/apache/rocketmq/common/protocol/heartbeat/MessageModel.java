@@ -21,6 +21,9 @@
 package org.apache.rocketmq.common.protocol.heartbeat;
 
 /**
+ * <p>
+ * 消费者消费模式。
+ * </p>
  * Message model
  */
 public enum MessageModel {

@@ -24,15 +24,18 @@ import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 
 /**
+ * <p>管理消费偏移量。</p>
  * Offset store interface
  */
 public interface OffsetStore {
     /**
+     * <p>加载消费进度。</p>
      * Load
      */
     void load() throws MQClientException;
 
     /**
+     * <p>更新进度到内存。</p>
      * Update the offset,store it in memory
      */
     void updateOffset(final MessageQueue mq, final long offset, final boolean increaseOnly);
@@ -45,16 +48,19 @@ public interface OffsetStore {
     long readOffset(final MessageQueue mq, final ReadOffsetType type);
 
     /**
+     * <p>持久化所有消费队列的进度。</p>
      * Persist all offsets,may be in local storage or remote name server
      */
     void persistAll(final Set<MessageQueue> mqs);
 
     /**
+     * <p>持久化给定消费队列的进度。</p>
      * Persist the offset,may be in local storage or remote name server
      */
     void persist(final MessageQueue mq);
 
     /**
+     * <p>移除给定消费队列的进度。</p>
      * Remove offset
      */
     void removeOffset(MessageQueue mq);
