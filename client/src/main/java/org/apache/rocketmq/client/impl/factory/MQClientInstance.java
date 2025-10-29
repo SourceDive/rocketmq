@@ -104,12 +104,17 @@ public class MQClientInstance {
     private final MQClientAPIImpl mQClientAPIImpl;
     private final MQAdminImpl mQAdminImpl;
     private final ConcurrentMap<String/* Topic */, TopicRouteData> topicRouteTable = new ConcurrentHashMap<String, TopicRouteData>();
+
+    // 锁
     private final Lock lockNamesrv = new ReentrantLock();
     private final Lock lockHeartbeat = new ReentrantLock();
+
+    // broker地址集合
     private final ConcurrentMap<String/* Broker Name */, HashMap<Long/* brokerId */, String/* address */>> brokerAddrTable =
         new ConcurrentHashMap<String, HashMap<Long, String>>();
     private final ConcurrentMap<String/* Broker Name */, HashMap<String/* address */, Integer>> brokerVersionTable =
         new ConcurrentHashMap<String, HashMap<String, Integer>>();
+
     private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
         @Override
         public Thread newThread(Runnable r) {
@@ -121,7 +126,7 @@ public class MQClientInstance {
     private final RebalanceService rebalanceService;
     private final DefaultMQProducer defaultMQProducer; // 框架内部的生产者。
     private final ConsumerStatsManager consumerStatsManager;
-    private final AtomicLong sendHeartbeatTimesTotal = new AtomicLong(0);
+    private final AtomicLong sendHeartbeatTimesTotal = new AtomicLong(0); // 发送心跳数据的次数
     private ServiceState serviceState = ServiceState.CREATE_JUST;
     private Random random = new Random();
 
